@@ -137,8 +137,8 @@ Specialized portal for family members or professional caregivers.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/kashyapdhamecha2207/HealthSyncAi-GU-.git
-cd HealthSyncAi-GU-
+git clone HealthSyncAI
+cd HealthSyncAI
 ```
 
 ### 2. Backend Config
@@ -210,11 +210,5 @@ We welcome contributions to the HealthSync AI+ project!
 
 ## 👨‍💻 Developed By
 *   **Kashyap Dhamecha** — Lead Architect & Backend Engineering
-*   **Development Team** — GU Health-Tech Hackathon Division
 
 Built with the ultimate goal of **Transforming the Digital Healthcare Landscape**.
-
----
-*Created on: April 4, 2026*
-*Current Version: 2.1.0-beta*
-*Lines of documentation: 230+*
