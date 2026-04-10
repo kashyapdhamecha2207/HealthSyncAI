@@ -137,7 +137,7 @@ Specialized portal for family members or professional caregivers.
 
 ### 1. Clone the Repository
 ```bash
-git clone HealthSyncAI
+git clone https://github.com/kashyapdhamecha2207/HealthSyncAI
 cd HealthSyncAI
 ```
 
