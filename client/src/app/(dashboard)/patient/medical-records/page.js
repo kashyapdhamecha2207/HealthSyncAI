@@ -62,15 +62,21 @@ export default function MedicalRecords() {
         responseType: 'blob'
       });
 
-      const blob = new Blob([res.data], { type: record.mimeType });
+      // Check if res.data is already a Blob, otherwise wrap it
+      const blob = res.data instanceof Blob ? res.data : new Blob([res.data], { type: record.mimeType });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
+      a.style.display = 'none';
       a.href = url;
-      a.download = record.originalName;
+      a.download = record.originalName || 'medical_record';
       document.body.appendChild(a);
       a.click();
-      document.body.removeChild(a);
-      window.URL.revokeObjectURL(url);
+      
+      // Cleanup
+      setTimeout(() => {
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+      }, 100);
     } catch (err) {
       console.error('Download failed:', err);
       alert('Failed to download file');

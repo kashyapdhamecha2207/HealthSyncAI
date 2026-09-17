@@ -5,7 +5,8 @@ const {
   getMedicalRecords,
   uploadMedicalRecord,
   downloadMedicalRecord,
-  deleteMedicalRecord
+  deleteMedicalRecord,
+  getHealthTimeline
 } = require('../controllers/medicalRecordController');
 const { auth } = require('../middleware/auth');
 
@@ -36,6 +37,7 @@ router.route('/')
   .get(getMedicalRecords)
   .post(upload.single('file'), uploadMedicalRecord);
 
+router.get('/timeline', getHealthTimeline);
 router.get('/:id/download', downloadMedicalRecord);
 router.delete('/:id', deleteMedicalRecord);
 

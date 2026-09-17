@@ -14,70 +14,11 @@ export default function HealthTimeline() {
   const fetchTimeline = async () => {
     try {
       setLoading(true);
-      // Mock data for demonstration
-      const mockTimeline = [
-        {
-          id: '1',
-          date: '2026-01-15',
-          type: 'appointment',
-          title: 'Initial Health Assessment',
-          description: 'Comprehensive health evaluation with Dr. Sarah Johnson',
-          status: 'completed',
-          doctor: 'Dr. Sarah Johnson',
-          location: 'HealthSync Medical Center'
-        },
-        {
-          id: '2',
-          date: '2026-02-01',
-          type: 'medication',
-          title: 'Started Metformin',
-          description: 'Prescribed 500mg Metformin for diabetes management',
-          status: 'active',
-          doctor: 'Dr. Michael Chen',
-          location: 'HealthSync Pharmacy'
-        },
-        {
-          id: '3',
-          date: '2026-02-15',
-          type: 'lab-result',
-          title: 'Blood Work Results',
-          description: 'Complete blood panel - all levels within normal range',
-          status: 'completed',
-          doctor: 'Dr. Emily Davis',
-          location: 'HealthSync Laboratory'
-        },
-        {
-          id: '4',
-          date: '2026-03-01',
-          type: 'appointment',
-          title: 'Diabetes Follow-up',
-          description: '3-month checkup to review medication effectiveness',
-          status: 'completed',
-          doctor: 'Dr. Michael Chen',
-          location: 'HealthSync Medical Center'
-        },
-        {
-          id: '5',
-          date: '2026-03-15',
-          type: 'exercise',
-          title: 'Started Exercise Program',
-          description: 'Began 30-minute daily walking routine as recommended',
-          status: 'active',
-          location: 'Local Park'
-        },
-        {
-          id: '6',
-          date: '2026-04-01',
-          type: 'vital-signs',
-          title: 'Health Metrics Improvement',
-          description: 'Blood pressure improved from 140/90 to 120/80 through lifestyle changes',
-          status: 'completed',
-          location: 'Home Monitoring'
-        }
-      ];
-      setTimeline(mockTimeline);
+      const res = await api.get('/medical-records/timeline');
+      setTimeline(res.data || []);
     } catch (err) {
       console.error('Failed to fetch timeline:', err);
+      setTimeline([]);
     } finally {
       setLoading(false);
     }

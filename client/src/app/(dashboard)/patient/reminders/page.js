@@ -22,12 +22,11 @@ export default function Reminders() {
     fetchReminders();
   }, []);
 
-  const fetchReminders = () => {
+  const fetchReminders = async () => {
     try {
       setLoading(true);
-      // Load from localStorage instantly (synchronous)
-      const storedReminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-      setReminders(storedReminders);
+      const res = await api.get('/reminders');
+      setReminders(res.data || []);
     } catch (err) {
       console.error('Failed to fetch reminders:', err);
       setReminders([]);
@@ -36,52 +35,17 @@ export default function Reminders() {
     }
   };
 
-  const sendReminderEmail = async (reminder) => {
-    try {
-      // Mock email sending - in real implementation, this would call backend API
-      console.log('Sending reminder email:', reminder);
-      
-      // For demo purposes, show what would be sent
-      const emailContent = `
-Reminder Notification
-==================
-Title: ${reminder.title}
-Message: ${reminder.message}
-Time: ${reminder.time}
-Frequency: ${reminder.frequency}
-Date: ${reminder.date}
-==================
-This is an automated reminder from HealthSyncAI.
-      `;
-      
-      console.log('Email content:', emailContent);
-      
-      // In real implementation: await api.post('/send-reminder-email', { reminder });
-      
-    } catch (err) {
-      console.error('Failed to send reminder email:', err);
-    }
-  };
-
   const handleAddReminder = async (e) => {
     e.preventDefault();
     try {
-      // Create new reminder
-      const newReminder = {
+      setLoading(true);
+      const payload = {
         ...reminderForm,
-        id: Date.now().toString(),
-        active: true,
-        date: new Date().toISOString().split('T')[0],
-        createdAt: new Date().toISOString()
+        date: new Date().toISOString().split('T')[0]
       };
       
-      // Add to state
-      setReminders([...reminders, newReminder]);
-      
-      // Store in localStorage for persistence
-      const storedReminders = JSON.parse(localStorage.getItem('reminders') || '[]');
-      storedReminders.push(newReminder);
-      localStorage.setItem('reminders', JSON.stringify(storedReminders));
+      const res = await api.post('/reminders', payload);
+      setReminders([res.data, ...reminders]);
       
       // Reset form
       setReminderForm({
@@ -93,43 +57,35 @@ This is an automated reminder from HealthSyncAI.
       });
       setShowAddForm(false);
       
-      // Send email notification (mock)
-      await sendReminderEmail(newReminder);
-      
-      alert('Reminder added successfully!');
+      alert('Reminder scheduled successfully! A confirmation email has been sent.');
     } catch (err) {
+      console.error(err);
       alert('Failed to add reminder');
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleDeleteReminder = async (id) => {
     try {
-      // Update state
-      const updatedReminders = reminders.filter(reminder => reminder.id !== id);
-      setReminders(updatedReminders);
-      
-      // Update localStorage
-      localStorage.setItem('reminders', JSON.stringify(updatedReminders));
-      
+      await api.delete(`/reminders/${id}`);
+      setReminders(reminders.filter(reminder => reminder.id !== id));
       alert('Reminder deleted successfully!');
     } catch (err) {
+      console.error(err);
       alert('Failed to delete reminder');
     }
   };
 
   const handleToggleReminder = async (id) => {
     try {
-      // Update state
-      const updatedReminders = reminders.map(reminder => 
-        reminder.id === id ? { ...reminder, active: !reminder.active } : reminder
-      );
-      setReminders(updatedReminders);
-      
-      // Update localStorage
-      localStorage.setItem('reminders', JSON.stringify(updatedReminders));
-      
-      alert(`Reminder ${reminders.find(r => r.id === id)?.active ? 'disabled' : 'enabled'} successfully!`);
+      const res = await api.put(`/reminders/${id}/toggle`);
+      setReminders(reminders.map(reminder => 
+        reminder.id === id ? res.data : reminder
+      ));
+      alert(`Reminder ${res.data.active ? 'enabled' : 'disabled'} successfully!`);
     } catch (err) {
+      console.error(err);
       alert('Failed to toggle reminder');
     }
   };
