@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import api from '../../../../lib/axios';
 import { useRouter } from 'next/navigation';
-import { Calendar, BarChart3, Heart, User, Clock } from 'lucide-react';
+import { Calendar, BarChart3, Heart, User, Clock, Video } from 'lucide-react';
+import VideoConsultation from '../../../../components/VideoConsultation';
 
 export default function BookAppointment() {
   const router = useRouter();
@@ -25,6 +26,7 @@ export default function BookAppointment() {
     notes: ''
   });
   const [selectedDoctor, setSelectedDoctor] = useState(null);
+  const [activeConsultation, setActiveConsultation] = useState(null);
 
   useEffect(() => {
     fetchAppointments();
@@ -54,26 +56,12 @@ export default function BookAppointment() {
   const fetchDoctors = async () => {
     try {
       const res = await api.get('/doctors/all');
-      const doctorsData = res.data.data || [];
-      
-      if (doctorsData.length === 0) {
-        const mockDoctors = [
-          { _id: '1', name: 'Sarah Johnson', specialty: 'General Physician', experience: '10 years' },
-          { _id: '2', name: 'Michael Chen', specialty: 'Cardiologist', experience: '15 years' },
-          { _id: '3', name: 'Emily Davis', specialty: 'Dermatologist', experience: '8 years' }
-        ];
-        setDoctors(mockDoctors);
-      } else {
-        setDoctors(doctorsData);
-      }
+      // Accommodate different potential API response structures
+      const doctorsData = res.data?.data || res.data || [];
+      setDoctors(Array.isArray(doctorsData) ? doctorsData : []);
     } catch (err) {
       console.error('Failed to fetch doctors:', err);
-      const mockDoctors = [
-        { _id: '1', name: 'Sarah Johnson', specialty: 'General Physician', experience: '10 years' },
-        { _id: '2', name: 'Michael Chen', specialty: 'Cardiologist', experience: '15 years' },
-        { _id: '3', name: 'Emily Davis', specialty: 'Dermatologist', experience: '8 years' }
-      ];
-      setDoctors(mockDoctors);
+      setDoctors([]);
     }
   };
 
@@ -226,8 +214,16 @@ export default function BookAppointment() {
                         {new Date(apt.date).toLocaleDateString()} at {apt.time}
                       </div>
                     </div>
-                    <div className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
-                      Scheduled
+                    <div className="flex items-center gap-3">
+                      <button 
+                        onClick={() => setActiveConsultation(apt._id)}
+                        className="px-3 py-1 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 rounded-lg text-sm font-bold flex items-center gap-1 transition"
+                      >
+                        <Video size={14} /> Join Call
+                      </button>
+                      <div className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                        Scheduled
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -338,6 +334,13 @@ export default function BookAppointment() {
           </div>
         </div>
       </div>
+      
+      {activeConsultation && (
+        <VideoConsultation 
+          roomName={`Appointment_${activeConsultation}`} 
+          onClose={() => setActiveConsultation(null)} 
+        />
+      )}
     </div>
   );
 }

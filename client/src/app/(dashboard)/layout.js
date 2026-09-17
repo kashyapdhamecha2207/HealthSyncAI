@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import { LogOut, Home, Calendar, Pill, Stethoscope, FileText, AlertTriangle, Settings, Users, Heart } from 'lucide-react';
+import Link from 'next/link';
+import { LogOut, Home, Calendar, Pill, Stethoscope, FileText, AlertTriangle, Settings, Users, Heart, CreditCard, Package, Beaker, Bed, Bot } from 'lucide-react';
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -56,156 +57,216 @@ export default function DashboardLayout({ children }) {
           </div>
 
           <nav className="space-y-2 pb-20">
-            <a href={`/${user.role}`} className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+            <Link href={`/${user.role}`} className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
               pathname === `/${user.role}` 
                 ? 'bg-gradient-to-r from-teal-500 to-emerald-500 shadow-lg border-2 border-teal-400' 
                 : 'bg-white/10 hover:bg-white/20'
             }`}>
               <Home size={20} className={pathname === `/${user.role}` ? 'text-white' : 'text-teal-400'} /> 
               <span className={pathname === `/${user.role}` ? 'text-white font-bold' : 'text-white'}>Dashboard</span>
-            </a>
+            </Link>
             
             {user.role === 'patient' && (
               <>
-                <a href="/patient/appointments" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                <Link href="/patient/appointments" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/patient/appointments' 
                     ? 'bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg border-2 border-blue-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <Calendar size={20} className={pathname === '/patient/appointments' ? 'text-white' : 'text-blue-400'} /> 
                   <span className={pathname === '/patient/appointments' ? 'text-white font-bold' : 'text-white'}>Book Appointment</span>
-                </a>
-                <a href="/patient/medications" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                </Link>
+                <Link href="/patient/medications" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/patient/medications' 
                     ? 'bg-gradient-to-r from-emerald-500 to-teal-500 shadow-lg border-2 border-emerald-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <Pill size={20} className={pathname === '/patient/medications' ? 'text-white' : 'text-emerald-400'} /> 
                   <span className={pathname === '/patient/medications' ? 'text-white font-bold' : 'text-white'}>Medications</span>
-                </a>
-                <a href="/patient/opd-history" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                </Link>
+                <Link href="/patient/opd-history" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/patient/opd-history' 
                     ? 'bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg border-2 border-purple-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <FileText size={20} className={pathname === '/patient/opd-history' ? 'text-white' : 'text-purple-400'} /> 
                   <span className={pathname === '/patient/opd-history' ? 'text-white font-bold' : 'text-white'}>OPD History</span>
-                </a>
+                </Link>
                 
                 {/* Health Management Dashboard Buttons */}
                 <div className="pt-4 border-t border-white/10">
                   <p className="text-xs text-slate-400 font-semibold mb-3 uppercase tracking-wider">Health Management</p>
                   <div className="space-y-2">
-                    <a href="/patient/appointments" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    <Link href="/patient/appointments" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/appointments' 
                         ? 'bg-gradient-to-r from-teal-500 to-cyan-500 shadow-lg border-2 border-teal-400' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <Calendar size={18} className={pathname === '/patient/appointments' ? 'text-white' : 'text-teal-400'} /> 
                       <span className={pathname === '/patient/appointments' ? 'text-white font-bold' : 'text-white text-sm'}>Book Appointment</span>
-                    </a>
-                    <a href="/patient/medical-records" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    </Link>
+                    <Link href="/patient/medical-records" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/medical-records'
                         ? 'bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg border-2 border-blue-400' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <FileText size={18} className={pathname === '/patient/medical-records' ? 'text-white' : 'text-blue-400'} /> 
                       <span className={pathname === '/patient/medical-records' ? 'text-white font-bold' : 'text-white text-sm'}>Medical Records</span>
-                    </a>
-                    <a href="/patient/medications" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    </Link>
+                    <Link href="/patient/medications" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/medications'
                         ? 'bg-gradient-to-r from-purple-500 to-pink-500 shadow-lg border-2 border-purple-400' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <Pill size={18} className={pathname === '/patient/medications' ? 'text-white' : 'text-purple-400'} /> 
                       <span className={pathname === '/patient/medications' ? 'text-white font-bold' : 'text-white text-sm'}>Medications</span>
-                    </a>
-                    <a href="/patient/reminders" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    </Link>
+                    <Link href="/patient/reminders" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/reminders'
                         ? 'bg-gradient-to-r from-orange-500 to-amber-500 shadow-lg border-2 border-orange-400' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <AlertTriangle size={18} className={pathname === '/patient/reminders' ? 'text-white' : 'text-orange-400'} /> 
                       <span className={pathname === '/patient/reminders' ? 'text-white font-bold' : 'text-white text-sm'}>Reminders</span>
-                    </a>
-                    <a href="/patient/health-tracking" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    </Link>
+                    <Link href="/patient/health-tracking" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/health-tracking'
                         ? 'bg-gradient-to-r from-red-500 to-pink-500 shadow-lg border-2 border-red-400' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <Heart size={18} className={pathname === '/patient/health-tracking' ? 'text-white' : 'text-red-400'} /> 
                       <span className={pathname === '/patient/health-tracking' ? 'text-white font-bold' : 'text-white text-sm'}>Health Tracking</span>
-                    </a>
-                    <a href="/patient/emergency" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    </Link>
+                    <Link href="/patient/emergency" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/emergency'
                         ? 'bg-gradient-to-r from-red-600 to-orange-600 shadow-lg border-2 border-red-500' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <AlertTriangle size={18} className={pathname === '/patient/emergency' ? 'text-white' : 'text-red-500'} /> 
                       <span className={pathname === '/patient/emergency' ? 'text-white font-bold' : 'text-white text-sm'}>Emergency</span>
-                    </a>
-                    <a href="/patient/health-timeline" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    </Link>
+                    <Link href="/patient/health-timeline" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                       pathname === '/patient/health-timeline'
                         ? 'bg-gradient-to-r from-gray-500 to-slate-500 shadow-lg border-2 border-gray-400' 
                         : 'bg-white/10 hover:bg-white/20'
                     }`}>
                       <Settings size={18} className={pathname === '/patient/health-timeline' ? 'text-white' : 'text-gray-400'} /> 
                       <span className={pathname === '/patient/health-timeline' ? 'text-white font-bold' : 'text-white text-sm'}>Health Timeline</span>
-                    </a>
+                    </Link>
+                    <Link href="/patient/invoices" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                      pathname === '/patient/invoices'
+                        ? 'bg-gradient-to-r from-green-500 to-emerald-500 shadow-lg border-2 border-green-400' 
+                        : 'bg-white/10 hover:bg-white/20'
+                    }`}>
+                      <CreditCard size={18} className={pathname === '/patient/invoices' ? 'text-white' : 'text-green-400'} /> 
+                      <span className={pathname === '/patient/invoices' ? 'text-white font-bold' : 'text-white text-sm'}>Bills & Invoices</span>
+                    </Link>
+                    <Link href="/patient/symptom-checker" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                      pathname === '/patient/symptom-checker'
+                        ? 'bg-gradient-to-r from-indigo-500 to-purple-500 shadow-lg border-2 border-indigo-400' 
+                        : 'bg-white/10 hover:bg-white/20'
+                    }`}>
+                      <Bot size={18} className={pathname === '/patient/symptom-checker' ? 'text-white' : 'text-indigo-400'} /> 
+                      <span className={pathname === '/patient/symptom-checker' ? 'text-white font-bold' : 'text-white text-sm'}>AI Symptom Checker</span>
+                    </Link>
                   </div>
                 </div>
               </>
             )}
             {user.role === 'doctor' && (
               <>
-                <a href="/opd" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                <Link href="/opd" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/opd' 
                     ? 'bg-gradient-to-r from-purple-500 to-indigo-500 shadow-lg border-2 border-purple-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <Stethoscope size={20} className={pathname === '/opd' ? 'text-white' : 'text-purple-400'} /> 
                   <span className={pathname === '/opd' ? 'text-white font-bold' : 'text-white'}>OPD Management</span>
-                </a>
-                <a href="/emergency" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                </Link>
+                <Link href="/doctor/lab-orders" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  pathname === '/doctor/lab-orders' 
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg border-2 border-blue-400' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}>
+                  <Beaker size={20} className={pathname === '/doctor/lab-orders' ? 'text-white' : 'text-blue-400'} /> 
+                  <span className={pathname === '/doctor/lab-orders' ? 'text-white font-bold' : 'text-white'}>Lab Orders</span>
+                </Link>
+                <Link href="/emergency" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/emergency' 
                     ? 'bg-gradient-to-r from-red-500 to-orange-500 shadow-lg border-2 border-red-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <AlertTriangle size={20} className={pathname === '/emergency' ? 'text-white' : 'text-red-400'} /> 
                   <span className={pathname === '/emergency' ? 'text-white font-bold' : 'text-white'}>Emergency</span>
-                </a>
+                </Link>
               </>
             )}
             {user.role === 'admin' && (
               <>
-                <a href="/admin" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                <Link href="/admin" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/admin' 
                     ? 'bg-gradient-to-r from-amber-500 to-orange-500 shadow-lg border-2 border-amber-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
-                  <Settings size={20} className={pathname === '/admin' ? 'text-white' : 'text-purple-400'} /> 
+                  <Settings size={20} className={pathname === '/admin' ? 'text-white' : 'text-amber-400'} /> 
                   <span className={pathname === '/admin' ? 'text-white font-bold' : 'text-white'}>Admin Dashboard</span>
-                </a>
-                <a href="/emergency" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                </Link>
+                <Link href="/admin/billing" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  pathname === '/admin/billing' 
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 shadow-lg border-2 border-green-400' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}>
+                  <CreditCard size={20} className={pathname === '/admin/billing' ? 'text-white' : 'text-green-400'} /> 
+                  <span className={pathname === '/admin/billing' ? 'text-white font-bold' : 'text-white'}>Billing Management</span>
+                </Link>
+                <Link href="/admin/pharmacy" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  pathname === '/admin/pharmacy' 
+                    ? 'bg-gradient-to-r from-blue-500 to-indigo-500 shadow-lg border-2 border-blue-400' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}>
+                  <Package size={20} className={pathname === '/admin/pharmacy' ? 'text-white' : 'text-blue-400'} /> 
+                  <span className={pathname === '/admin/pharmacy' ? 'text-white font-bold' : 'text-white'}>Pharmacy & Inventory</span>
+                </Link>
+                <Link href="/admin/bed-management" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  pathname === '/admin/bed-management' 
+                    ? 'bg-gradient-to-r from-pink-500 to-rose-500 shadow-lg border-2 border-pink-400' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}>
+                  <Bed size={20} className={pathname === '/admin/bed-management' ? 'text-white' : 'text-pink-400'} /> 
+                  <span className={pathname === '/admin/bed-management' ? 'text-white font-bold' : 'text-white'}>Bed Management</span>
+                </Link>
+                <Link href="/emergency" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/emergency' 
                     ? 'bg-gradient-to-r from-red-500 to-orange-500 shadow-lg border-2 border-red-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <AlertTriangle size={20} className={pathname === '/emergency' ? 'text-white' : 'text-red-400'} /> 
                   <span className={pathname === '/emergency' ? 'text-white font-bold' : 'text-white'}>Emergency</span>
-                </a>
+                </Link>
               </>
             )}
             {user.role === 'caregiver' && (
               <>
-                <a href="/caregiver" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                <Link href="/caregiver" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
                   pathname === '/caregiver' 
                     ? 'bg-gradient-to-r from-cyan-500 to-blue-500 shadow-lg border-2 border-cyan-400' 
                     : 'bg-white/10 hover:bg-white/20'
                 }`}>
                   <Users size={20} className={pathname === '/caregiver' ? 'text-white' : 'text-purple-400'} /> 
                   <span className={pathname === '/caregiver' ? 'text-white font-bold' : 'text-white'}>Caregiver</span>
-                </a>
+                </Link>
+              </>
+            )}
+            {user.role === 'lab-technician' && (
+              <>
+                <Link href="/lab-technician" className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                  pathname === '/lab-technician' 
+                    ? 'bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg border-2 border-blue-400' 
+                    : 'bg-white/10 hover:bg-white/20'
+                }`}>
+                  <Beaker size={20} className={pathname === '/lab-technician' ? 'text-white' : 'text-blue-400'} /> 
+                  <span className={pathname === '/lab-technician' ? 'text-white font-bold' : 'text-white'}>Lab Dashboard</span>
+                </Link>
               </>
             )}
           </nav>

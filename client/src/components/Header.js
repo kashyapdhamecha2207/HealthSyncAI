@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Header() {
   const router = useRouter();
@@ -55,17 +56,17 @@ export default function Header() {
               >
                 Logout
               </button>
-              <a 
+              <Link 
                 href={`/${user.role}`} 
                 className="text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-full transition-all shadow-md shadow-teal-500/20"
               >
                 Dashboard
-              </a>
+              </Link>
             </>
           ) : (
             <>
-              <a href="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900 py-2">Log In</a>
-              <a href="/register" className="text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-full transition-all shadow-md shadow-teal-500/20">Sign Up</a>
+              <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900 py-2">Log In</Link>
+              <Link href="/register" className="text-sm font-medium bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-full transition-all shadow-md shadow-teal-500/20">Sign Up</Link>
             </>
           )}
         </nav>
